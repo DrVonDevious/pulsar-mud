@@ -7,6 +7,5 @@ const inputBar = document.querySelector("#input-form")
 inputBar.addEventListener("submit", (event) => {
   event.preventDefault()
   commands.getCmd(event.target[0].value)
-  utils.awaitingResponse ? utils.awaitingResponse = false : null
   event.target[0].value = ""
 })

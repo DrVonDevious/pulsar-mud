@@ -45,10 +45,14 @@ const quitGame = (cmds) => {
 }
 
 const create = async () => {
-  await utils.query("What is your name?", (r) => {
-    utils.printMsg(`Answers: ${r}`)
+  // the current query function is super messy and NEEDS to be rewritten!
+  utils.printMsg("What is your name?", "green")
+  utils.awaitingResponse = true
+  utils.query("Test?", (response) => {
+    utils.printMsg(`Ah, so your name is ${response}!`, "gold")
+    player.name = response
+    console.log(player.name)
   })
-  console.log("DONE!")
 }
 
 // outputs an error message when an unknown input is entered

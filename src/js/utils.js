@@ -24,10 +24,14 @@ const utils = {
   awaitingResponse: false,
   response: "",
 
-  query: (question, callback) => {
-    utils.awaitingResponse = true
+  checkResponse: () => {
     if (utils.awaitingResponse) {
-      utils.wait(utils.query(question, callback), 3000)
+    }
+  },
+
+  query: (question, callback) => {
+    if (utils.awaitingResponse) {
+      utils.wait(() => {utils.query(question, callback)}, 100)
     } else {
       callback(r = utils.response)
     }
