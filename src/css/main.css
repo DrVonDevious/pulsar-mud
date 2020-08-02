@@ -26,9 +26,15 @@ body {
 }
 
 #main-window {
+  display: none;
   position: absolute;
   width: 100%;
   height: 100%;
+}
+
+#main-menu {
+  display: none;
+  background-color: gray;
 }
 
 #terminal-output {

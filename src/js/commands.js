@@ -40,7 +40,7 @@ const sendLocalMsg = (msgs) => {
 
 // closes all windows and quits the application
 const quitGame = (cmds) => {
-  let win = remote.getCurrentWindow()
+  // let win = remote.getCurrentWindow()
   remote.app.exit(0)
 }
 

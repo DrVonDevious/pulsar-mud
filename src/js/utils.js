@@ -1,5 +1,6 @@
 
 const terminal = document.querySelector("#terminal-output")
+const setTimeout = require("electron").remote.getGlobal("setTimeout")
 
 const utils = {
 
@@ -17,8 +18,16 @@ const utils = {
     terminal.innerHTML = ""
   },
 
-  wait: (callback, ms) => {
-    require("electron").remote.getGlobal("setTimeout")(callback, ms)
+  wait: ms => new Promise((r, j)=>setTimeout(r, ms)),
+
+  // wait: (ms) => {
+  //   new Promise((r) => {
+  //     require("electron").remote.getGlobal("setTimeout")(r, ms)
+  //   })
+  // },
+
+  setTimeout: (callback, ms) => {
+    setTimeout(callback, ms)
   },
 
   awaitingResponse: false,
@@ -31,7 +40,7 @@ const utils = {
 
   query: (question, callback) => {
     if (utils.awaitingResponse) {
-      utils.wait(() => {utils.query(question, callback)}, 100)
+      utils.timeout(() => {utils.query(question, callback)}, 100)
     } else {
       callback(r = utils.response)
     }
