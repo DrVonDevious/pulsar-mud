@@ -7,11 +7,36 @@
   <body>
     <div id="main-menu">
       <div id="menu-btn">
-        <button id="new">New</button>
+        <button id="new">Register</button>
+      </div>
+      <div id="menu-btn">
+        <button id="login">Login</button>
       </div>
       <div id="menu-btn">
         <button id="quit">Quit</button>
       </div>
+    </div>
+    <div id="register-window">
+      <form id="register-form">
+        <label>Username</label>
+        <input id="username-input" />
+        <label>Password</label>
+        <input id="password-input" type="password" />
+        <label>Confirm Password</label>
+        <input id="password-confirm-input" type="password" />
+        <label>Email</label>
+        <input id="email-input" />
+        <input type="submit" value="Register" />
+      </form>
+    </div>
+    <div id="login-window">
+      <form id="login-form">
+        <label>Username</label>
+        <input id="username-input" />
+        <label>Password</label>
+        <input id="password-input" type="hidden" />
+        <input type="submit" value="Login" />
+      </form>
     </div>
     <div id="main-window">
       <!-- Terminal Output -->

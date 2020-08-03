@@ -51,7 +51,6 @@ const create = async () => {
   utils.query("Test?", (response) => {
     utils.printMsg(`Ah, so your name is ${response}!`, "gold")
     player.name = response
-    console.log(player.name)
   })
 }
 

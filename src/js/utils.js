@@ -40,7 +40,7 @@ const utils = {
 
   query: (question, callback) => {
     if (utils.awaitingResponse) {
-      utils.timeout(() => {utils.query(question, callback)}, 100)
+      utils.setTimeout(() => {utils.query(question, callback)}, 100)
     } else {
       callback(r = utils.response)
     }

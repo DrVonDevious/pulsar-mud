@@ -5,6 +5,8 @@ const player = require("../js/player.js")
 const mainDiv = document.querySelector("#main-window")
 const menu = document.querySelector("#main-menu")
 const inputBar = document.querySelector("#input-form")
+const register = document.querySelector("#register-window")
+const login = document.querySelector("#login-window")
 
 // processes user input and clears the input bar
 inputBar.addEventListener("submit", (event) => {
@@ -12,7 +14,6 @@ inputBar.addEventListener("submit", (event) => {
   commands.getCmd(event.target[0].value)
   event.target[0].value = ""
 })
-
 
 const titleScreen = async (string, duration) => {
   let title = document.createElement("h1")
@@ -25,11 +26,15 @@ const titleScreen = async (string, duration) => {
 
 const mainMenu = () => {
   const newButton = document.querySelector("#new")
+  const loginButton = document.querySelector("#login")
   const quitButton = document.querySelector("#quit")
   menu.style.display = "block"
 
   newButton.addEventListener("click", () => {
-    menu.style.display = "none"
+    userRegister()
+  })
+
+  loginButton.addEventListener("click", () => {
     gameScreen()
   })
 
@@ -38,7 +43,15 @@ const mainMenu = () => {
   })
 }
 
+const userRegister = () => {
+  menu.style.display = "none"
+  register.style.display = "block"
+}
+
+const userLogin = () => {}
+
 const gameScreen = () => {
+  menu.style.display = "none"
   mainDiv.style.display = "block"
 }
 
