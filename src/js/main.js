@@ -1,6 +1,7 @@
 const commands = require("../js/commands.js")
 const utils = require("../js/utils.js")
 const player = require("../js/player.js")
+const user = require("../js/user.js")
 const request = require("superagent")
 
 const mainDiv = document.querySelector("#main-window")
@@ -97,6 +98,9 @@ const userLogin = () => {
         if (foundUser && foundUser.password === password) {
           login.style.display = "none"
           mainDiv.style.display = "block"
+          user.id = foundUser.id
+          user.username = username
+          user.role = foundUser.role
         } else {
           event.target[0].value = ""
           event.target[1].value = ""

@@ -1,5 +1,6 @@
 const remote = require("electron").remote
 const utils = require("../js/utils.js")
+const user = require("../js/user.js")
 const player = require("../js/player.js")
 
 const output = document.querySelector("#terminal-output")
@@ -23,7 +24,10 @@ const commands = {
         case "clear": utils.clearScreen(); break
         case "quit": quitGame(cmds); break
         case "say": sendLocalMsg(cmds); break
-        case "create": create(); break
+        case "new": user.newCharacter(); break
+        case "user": userInfo(); break
+        case "play": user.playCharacter(cmds[1]); break
+        case "characters": user.characters(); break
         default: unknownCmd(); break
       }
     }
@@ -44,14 +48,8 @@ const quitGame = (cmds) => {
   remote.app.exit(0)
 }
 
-const create = async () => {
-  // the current query function is super messy and NEEDS to be rewritten!
-  utils.printMsg("What is your name?", "green")
-  utils.awaitingResponse = true
-  utils.query("Test?", (response) => {
-    utils.printMsg(`Ah, so your name is ${response}!`, "gold")
-    player.name = response
-  })
+const userInfo = () => {
+  utils.printMsg(`Username: ${user.username}`)
 }
 
 // outputs an error message when an unknown input is entered

@@ -58,10 +58,41 @@ const deleteUser = (request, response) => {
   })
 }
 
+const getCharacters = (request, response) => {
+  pool.query("SELECT * FROM characters", (error, results) => {
+    if (error) { throw error }
+    response.status(200).json(results.rows)
+  })
+}
+
+const getCharacterById = (request, response) => {
+  const id = parseInt(request.params.id)
+
+  pool.query("SELECT * FROM characters WHERE id = $1", [id], (error, results) => {
+    if (error) { throw error }
+    response.status(200).json(results.rows)
+  })
+}
+
+const createCharacter = (request, response) => {
+  const { name, race, xpos, ypos, zpos, user_id } = request.body
+
+  pool.query(
+    "INSERT INTO characters (name, race, xpos, ypos, zpos, user_id) VALUES ($1, $2, $3, $4, $5, $6)",
+    [name, race, xpos, ypos, zpos, user_id], (error, result) => {
+      if (error) { throw error }
+      response.status(201).send(`Character created with ID: ${result.insertId}`)
+    }
+  )
+}
+
 module.exports = {
   getUsers,
   getUserById,
   createUser,
   updateUser,
   deleteUser,
+  getCharacters,
+  getCharacterById,
+  createCharacter,
 }

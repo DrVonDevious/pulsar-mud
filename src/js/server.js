@@ -23,6 +23,10 @@ app.post("/users", db.createUser)
 app.put("/users/:id", db.updateUser)
 app.delete("/users/:id", db.deleteUser)
 
+app.get("/characters", db.getCharacters)
+app.get("/characters/:id", db.getCharacterById)
+app.post("/characters", db.createCharacter)
+
 app.listen(port, () => {
   console.log(`All systems nominal! Pulsar server running on port ${port}.`)
 })
