@@ -7,6 +7,7 @@ const pool = new Pool({
   port: 5432,
 })
 
+// USERS
 const getUsers = (request, response) => {
   pool.query("SELECT * FROM users", (error, results) => {
     if (error) { throw error }
@@ -58,6 +59,7 @@ const deleteUser = (request, response) => {
   })
 }
 
+// CHARACTERS
 const getCharacters = (request, response) => {
   pool.query("SELECT * FROM characters", (error, results) => {
     if (error) { throw error }
@@ -86,6 +88,35 @@ const createCharacter = (request, response) => {
   )
 }
 
+// LOCATIONS
+const getLocations = (request, response) => {
+  pool.query("SELECT * FROM locations", (error, results) => {
+    if (error) { throw error }
+    response.status(200).json(results.rows)
+  })
+}
+
+const getLocationById = (request, response) => {
+  const id = parseInt(request.params.id)
+
+  pool.query("SELECT * FROM locations WHERE id = $1", [id], (error, results) => {
+    if (error) { throw error }
+    response.status(200).json(results.rows)
+  })
+}
+
+const createLocation = (request, response) => {
+  const { name, description, x, y, z, exits } = request.body
+
+  pool.query(
+    "INSERT INTO characters (name, race, xpos, ypos, zpos, user_id) VALUES ($1, $2, $3, $4, $5, $6)",
+    [name, description, x, y, z, exits], (error, result) => {
+      if (error) { throw error }
+      response.status(201).send(`Location created with ID: ${result.insertId}`)
+    }
+  )
+}
+
 module.exports = {
   getUsers,
   getUserById,
@@ -95,4 +126,7 @@ module.exports = {
   getCharacters,
   getCharacterById,
   createCharacter,
+  getLocations,
+  getLocationById,
+  createLocation,
 }

@@ -28,6 +28,7 @@ const commands = {
         case "user": userInfo(); break
         case "play": user.playCharacter(cmds[1]); break
         case "characters": user.characters(); break
+        case "where": player.where(); break
         default: unknownCmd(); break
       }
     }

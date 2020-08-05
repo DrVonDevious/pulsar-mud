@@ -1,23 +1,34 @@
 
 const utils = require("../js/utils.js")
+const user = require("../js/user.js")
+const request = require("superagent")
+
+const getLocations = async () => {
+  let locations = await request.get("http://localhost:3000/locations")
+    .then(res => {
+      return res.body
+    })
+  return locations
+}
+
+const getCurrentLocation = async () => {
+  let locations = await getLocations()
+  let currentLocation = locations.map(loc => {
+    if (
+      loc.x == user.currentCharacter.xpos &&
+      loc.y == user.currentCharacter.ypos &&
+      loc.z == user.currentCharacter.zpos
+    ) { return loc }
+  })[0]
+  return currentLocation
+}
 
 const player = {
 
-  name: "Bob",
-  isAdmin: true,
-  race: "Human",
-  hp: 10,
-  x: 0,
-  y: 0,
-  z: 0,
-
-  tele: (destination) => {
-    if (player.isAdmin) {
-      utils.printMsg(`Teleporting to ${destination}.`, "gold", "italic")
-      player.x = player.y = player.z = 0
-    } else {
-      utils.printMsg("You do not have permision to use that command!", "#F00")
-    }
+  where: async () => {
+    let location = await getCurrentLocation()
+    utils.printMsg(location.name, "#CF0")
+    utils.printMsg(location.description)
   },
 
 }
