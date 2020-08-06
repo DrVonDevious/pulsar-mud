@@ -1,5 +1,6 @@
 const remote = require("electron").remote
 const utils = require("../js/utils.js")
+const admin = require("../js/admin.js")
 const user = require("../js/user.js")
 const player = require("../js/player.js")
 
@@ -29,6 +30,9 @@ const commands = {
         case "play": user.playCharacter(cmds[1]); break
         case "characters": user.characters(); break
         case "where": player.where(); break
+        case "go": player.go(cmds[1]); break
+        case "tele": admin.teleport(cmds[1], cmds[2], cmds[3]); break
+        case "createLocation": admin.newLocation(); break
         default: unknownCmd(); break
       }
     }

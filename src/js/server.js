@@ -26,6 +26,7 @@ app.delete("/users/:id", db.deleteUser)
 app.get("/characters", db.getCharacters)
 app.get("/characters/:id", db.getCharacterById)
 app.post("/characters", db.createCharacter)
+app.put("/characters/:id", db.updateCharacter)
 
 app.get("/locations", db.getLocations)
 app.get("/locations/:id", db.getLocationById)
