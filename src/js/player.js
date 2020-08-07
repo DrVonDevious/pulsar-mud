@@ -3,30 +3,22 @@ const utils = require("../js/utils.js")
 const user = require("../js/user.js")
 const request = require("superagent")
 
-const getLocations = async () => {
-  let locations = await request.get("http://localhost:3000/locations")
-    .then(res => {
-      return res.body
-    })
-  return locations
-}
-
-const getCurrentLocation = async () => {
-  let locations = await getLocations()
-  let currentLocation = locations.find(loc => {
-    if (
-      loc.x == user.currentCharacter.xpos &&
-      loc.y == user.currentCharacter.ypos &&
-      loc.z == user.currentCharacter.zpos
-    ) { return loc }
-  })
-  return currentLocation
-}
-
 const player = {
 
+  getCurrentLocation: async () => {
+    let locations = await utils.getLocations()
+    let currentLocation = locations.find(loc => {
+      if (
+        loc.x == user.currentCharacter.xpos &&
+        loc.y == user.currentCharacter.ypos &&
+        loc.z == user.currentCharacter.zpos
+      ) { return loc }
+    })
+    return currentLocation
+  },
+
   where: async () => {
-    let location = await getCurrentLocation()
+    let location = await player.getCurrentLocation()
     utils.printMsg(location.id)
     utils.printMsg(location.name, "#CF0")
     utils.printMsg(location.description)
@@ -38,11 +30,10 @@ const player = {
   },
 
   go: async (direction) => {
-    let location = await getCurrentLocation()
-    // let targetDirection = Object.keys(location.exits).find(exit => exit == direction)
+    let location = await player.getCurrentLocation()
     let targetId = location.exits[direction]
     if (targetId) {
-      let locations = await getLocations()
+      let locations = await utils.getLocations()
       let newLocation = await request.get(`http://localhost:3000/locations/${targetId}`)
         .then(res => { return res.body[0] })
       user.currentCharacter.xpos = newLocation.x
@@ -62,6 +53,7 @@ const player = {
       })
       .then(res => {
         console.log(JSON.stringify(res.body))
+        player.where()
       })
       .catch(err => {
         console.log(err.message)

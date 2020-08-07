@@ -20,21 +20,34 @@ const commands = {
       utils.response = cmd
       utils.awaitingResponse = false
     } else {
+
+      let playerFilter = !!user.currentCharacter
+      let adminFilter = user.currentCharacter && user.role == "admin"
+
       // checks if the first word of a command matches a known command
-      switch(cmds[0]) {
-        case "clear": utils.clearScreen(); break
-        case "quit": quitGame(cmds); break
-        case "say": sendLocalMsg(cmds); break
-        case "new": user.newCharacter(); break
-        case "user": userInfo(); break
-        case "play": user.playCharacter(cmds[1]); break
-        case "characters": user.characters(); break
-        case "where": player.where(); break
-        case "go": player.go(cmds[1]); break
-        case "tele": admin.teleport(cmds[1], cmds[2], cmds[3]); break
-        case "createLocation": admin.newLocation(); break
-        default: unknownCmd(); break
+      // User Commands
+      if (cmds[0] == "clear") utils.clearScreen()
+      else if (cmds[0] == "quit") quitGame()
+      else if (cmds[0] == "new") user.newCharacter()
+      else if (cmds[0] == "user") userInfo()
+      else if (cmds[0] == "play") user.playCharacter(cmds[1])
+      else if (cmds[0] == "characters") user.characters()
+
+      // Player Commands
+      else if (cmds[0] == "say" && playerFilter) sendLocalMsg(cmds)
+      else if (cmds[0] == "go" && playerFilter) player.go(cmds[1])
+      else if (cmds[0] == "where" && playerFilter) player.where()
+
+      // Admin Commands
+      else if (cmds[0] == "tele" && adminFilter) {
+        admin.teleport(cmds[1], cmds[2], cmds[3])
       }
+
+      else if (cmds[0] == "createLocation" && adminFilter) admin.newLocation()
+      else if (cmds[0] == "editLocation" && adminFilter) admin.editLocation()
+      else if (cmds[0] == "deleteLocation" && adminFilter) admin.deleteLocation()
+
+      else unknownCmd()
     }
   },
 

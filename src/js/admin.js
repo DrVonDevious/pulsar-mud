@@ -23,30 +23,82 @@ const createLocation = (name, description, exits) => {
     })
 }
 
+const removeLocation = async (id) => {
+  let location = await player.getCurrentLocation()
+
+  request.delete(`http://localhost:3000/locations/${id}`)
+    .then(res => {
+      console.log(JSON.stringify(res.body))
+      utils.printMsg("Location deleted!")
+    })
+    .catch(err => {
+      console.log(err.message)
+      console.log(err.response)
+    })
+}
+
+const updateLocation = async (name, description, exits) => {
+  let location = await player.getCurrentLocation()
+  console.log(location)
+  request.put(`http://localhost:3000/locations/${location.id}`)
+    .send({
+      name: name,
+      description: description,
+      x: location.x,
+      y: location.y,
+      z: location.z,
+      exits: exits
+    })
+    .then(res => {
+      console.log(JSON.stringify(res.body))
+      utils.printMsg("Location updated!")
+    })
+    .catch(err => {
+      console.log(err.message)
+      console.log(err.response)
+    })
+}
+
 const admin = {
 
-  newLocation: () => {
-    utils.printMsg("Enter location name:")
-    utils.awaitingResponse = true
-    utils.query("", (response) => {
-      let name = response
-      utils.printMsg("Enter location description:")
-      utils.awaitingResponse = true
-      utils.query("", (response) => {
-        let description = response
-        utils.printMsg("Enter exits in JSON form: {'direction':'Location ID'}")
-        utils.awaitingResponse = true
-        utils.query("", (response => {
-          console.log(response)
-          console.log(JSON.parse(response))
-          let exits = response//JSON.parse(response)
-          createLocation(name, description, exits)
-        }))
-      })
-    })
+  newLocation: async () => {
+    let name = await utils.query("Enter location name:")
+    let description = await utils.query("Enter location description:")
+    let exits = await utils.query(`Enter exits in JSON form: {"direction":<location_id>}`)
+
+    createLocation(name, description, exits)
   },
 
-  editLocation: () => {},
+  removeLocation: async () => {
+    let location = await player.getCurrentLocation()
+    removeLocation(location.id)
+  },
+
+  editLocation: async () => {
+    let location = await player.getCurrentLocation()
+    let response = utils.query("Which property would you like to edit? (name, description, exits)")
+
+    switch(response) {
+      case "name":
+        utils.printMsg("Enter new name:")
+        utils.awaitingResponse = true
+        utils.query("", response => updateLocation(response, location.description, location.exits))
+        break
+      case "desc":
+        utils.printMsg("Enter new description:")
+        utils.awaitingResponse = true
+        utils.query("", response => updateLocation(location.name, response, location.exits))
+        break
+      case "exits":
+        utils.printMsg("Enter new exits:")
+        utils.awaitingResponse = true
+        utils.query("", response => updateLocation(location.name, location.description, response))
+        break
+      default:
+        utils.printMsg("Invalid input!", "#F00")
+        break
+    }
+  },
 
   banUser: (user) => {},
 

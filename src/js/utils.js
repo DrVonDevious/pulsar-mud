@@ -1,8 +1,26 @@
 
 const terminal = document.querySelector("#terminal-output")
 const setTimeout = require("electron").remote.getGlobal("setTimeout")
+const request = require("superagent")
 
 const utils = {
+
+  waitFor: (condition) => {
+    const poll = resolve => {
+      if(condition()) resolve();
+      else setTimeout(_ => poll(resolve), 500);
+    }
+
+    return new Promise(poll);
+  },
+
+  getLocations: async () => {
+    let locations = await request.get("http://localhost:3000/locations")
+      .then(res => {
+        return res.body
+      })
+    return locations
+  },
 
   printMsg: (msg, color="#FFF", background="rgba(0,0,0,0)", style="normal") => {
     let message_element = document.createElement("p")
@@ -20,12 +38,6 @@ const utils = {
 
   wait: ms => new Promise((r, j)=>setTimeout(r, ms)),
 
-  // wait: (ms) => {
-  //   new Promise((r) => {
-  //     require("electron").remote.getGlobal("setTimeout")(r, ms)
-  //   })
-  // },
-
   setTimeout: (callback, ms) => {
     setTimeout(callback, ms)
   },
@@ -33,17 +45,14 @@ const utils = {
   awaitingResponse: false,
   response: "",
 
-  checkResponse: () => {
-    if (utils.awaitingResponse) {
-    }
-  },
+  query: async (question) => {
 
-  query: (question, callback) => {
-    if (utils.awaitingResponse) {
-      utils.setTimeout(() => {utils.query(question, callback)}, 100)
-    } else {
-      callback(r = utils.response)
-    }
+    utils.printMsg(question)
+
+    utils.awaitingResponse = true
+    await utils.waitFor(_ => !utils.awaitingResponse)
+    return utils.response
+
   },
 
 }

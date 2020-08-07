@@ -119,6 +119,20 @@ const getLocationById = (request, response) => {
   })
 }
 
+const updateLocation = (request, response) => {
+  const id = parseInt(request.params.id)
+  const { name, description, x, y, z, exits } = request.body
+
+  pool.query(
+    "UPDATE locations SET name = $1, description = $2, x = $3, y = $4, z = $5, exits = $6 WHERE id = $7",
+    [name, description, x, y, z, exits, id],
+    (error, results) => {
+      if (error) { throw error }
+      response.status(200).send(`Location modified with ID: ${id}`)
+    }
+  )
+}
+
 const createLocation = (request, response) => {
   const { name, description, x, y, z, exits } = request.body
 
@@ -129,6 +143,15 @@ const createLocation = (request, response) => {
       response.status(201).send(`Location created with ID: ${result.insertId}`)
     }
   )
+}
+
+const deleteLocation = (request, response) => {
+  const id = parseInt(request.params.id)
+
+  pool.query('DELETE FROM locations WHERE id = $1', [id], (error, results) => {
+    if (error) { throw error }
+    response.status(200).send(`Location deleted with ID: ${id}`)
+  })
 }
 
 module.exports = {
@@ -143,5 +166,7 @@ module.exports = {
   createCharacter,
   getLocations,
   getLocationById,
+  updateLocation,
   createLocation,
+  deleteLocation,
 }

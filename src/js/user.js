@@ -20,36 +20,30 @@ const user = {
   currentCharacter: null,
 
   newCharacter: async () => {
-    utils.printMsg("What is your name?")
-    utils.awaitingResponse = true
-    await utils.query("", async (response) => {
-      let name = response
-      utils.printMsg("What is your race? (human, rodan, dakari)")
-      utils.awaitingResponse = true
-      await utils.query("", (response) => {
-        let race = response
-        utils.printMsg("Character created!", "orange")
-        request.get(`http://localhost:3000/users/${user.id}`)
+
+    let name = await utils.query("What is your name?")
+    let race = await utils.query("What is your race? (human)")
+
+    request.get(`http://localhost:3000/users/${user.id}`)
+      .then(res => {
+        request.post("http://localhost:3000/characters")
+          .send({
+            name: name,
+            race: race,
+            xpos: 0,
+            ypos: 0,
+            zpos: 0,
+            user_id: user.id
+          })
           .then(res => {
-            request.post("http://localhost:3000/characters")
-              .send({
-                name: name,
-                race: race,
-                xpos: 0,
-                ypos: 0,
-                zpos: 0,
-                user_id: user.id
-              })
-              .then(res => {
-                console.log(JSON.stringify(res.body))
-              })
-              .catch(err => {
-                console.log(err.message)
-                console.log(err.response)
-              })
+            console.log(JSON.stringify(res.body))
+            utils.printMsg("Character created!", "#0F0")
+          })
+          .catch(err => {
+            console.log(err.message)
+            console.log(err.response)
           })
       })
-    })
   },
 
   characters: async () => {
