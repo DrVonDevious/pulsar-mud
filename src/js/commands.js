@@ -27,6 +27,7 @@ const commands = {
       // checks if the first word of a command matches a known command
       // User Commands
       if (cmds[0] == "clear") utils.clearScreen()
+      else if (cmds[0] == "help") help(cmds)
       else if (cmds[0] == "quit") quitGame()
       else if (cmds[0] == "new") user.newCharacter()
       else if (cmds[0] == "user") userInfo()
@@ -64,6 +65,23 @@ const sendLocalMsg = (msgs) => {
 const quitGame = (cmds) => {
   // let win = remote.getCurrentWindow()
   remote.app.exit(0)
+}
+
+const help = (cmds) => {
+  utils.printMsg("A list of commands ->", "#0F0")
+  utils.printMsg("\tUser commands:")
+  utils.printMsg("\t\tplay <character name> - begin playing as the specified character.")
+  utils.printMsg("\t\tnew - create a new character.")
+  utils.printMsg("\t\tclear - clears the terminal of messages.")
+  utils.printMsg("\t\tquit - quits the game.")
+  utils.printMsg("\t\tuser - displays information about your user.")
+  utils.printMsg("\t\tcharacters - displays a list of your existing characters.")
+  utils.printMsg("\n")
+  utils.printMsg("\tPlayer commands:")
+  utils.printMsg("\t\tsay - sends a message for all players in the current area to see.")
+  utils.printMsg("\t\twhere - displays information about your current location.")
+  utils.printMsg("\t\tgo <direction> - moves in a given direction from your current locations list of exits.")
+  utils.printMsg("\n")
 }
 
 const userInfo = () => {

@@ -23,7 +23,7 @@ const utils = {
   },
 
   printMsg: (msg, color="#FFF", background="rgba(0,0,0,0)", style="normal") => {
-    let message_element = document.createElement("p")
+    let message_element = document.createElement("pre")
     message_element.id = "terminal-msg"
     message_element.innerText = msg
     message_element.style.color = color
