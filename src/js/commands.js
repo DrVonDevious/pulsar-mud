@@ -35,7 +35,7 @@ const commands = {
       else if (cmds[0] == "characters") user.characters()
 
       // Player Commands
-      else if (cmds[0] == "say" && playerFilter) sendLocalMsg(cmds)
+      else if (cmds[0] == "say" && playerFilter) player.say(cmds)
       else if (cmds[0] == "go" && playerFilter) player.go(cmds[1])
       else if (cmds[0] == "where" && playerFilter) player.where()
 
@@ -52,13 +52,6 @@ const commands = {
     }
   },
 
-}
-
-// sends user message to the local chat for players in
-// the current zone to see
-const sendLocalMsg = (msgs) => {
-  let msg = msgs.slice(1).join(" ")
-  utils.printMsg(`${player.name} says: ${msg}`, "#0FF")
 }
 
 // closes all windows and quits the application

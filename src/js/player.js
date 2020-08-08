@@ -1,6 +1,8 @@
 
 const utils = require("../js/utils.js")
 const user = require("../js/user.js")
+const socket = require("../js/socket.js")
+const io = require("socket.io-client")
 const request = require("superagent")
 
 const player = {
@@ -60,6 +62,15 @@ const player = {
         console.log(err.response)
       })
   },
+
+  // sends user message to the local chat for players in
+  // the current zone to see
+  say: (msgs) => {
+    let msg = msgs.slice(1).join(" ")
+    let username = user.currentCharacter.name
+    // utils.printMsg(`${user.currentCharacter.name}: ${msg}`, "#0FF")
+    socket.currentSocket.emit("message", { sender:username, msg:msg })
+  }
 
 }
 

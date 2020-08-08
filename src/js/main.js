@@ -1,8 +1,10 @@
 const commands = require("../js/commands.js")
 const utils = require("../js/utils.js")
 const player = require("../js/player.js")
+const socket = require("../js/socket.js")
 const user = require("../js/user.js")
 const request = require("superagent")
+const io = require("socket.io-client")
 
 const mainDiv = document.querySelector("#main-window")
 const menu = document.querySelector("#main-menu")
@@ -101,6 +103,7 @@ const userLogin = () => {
           user.id = foundUser.id
           user.username = username
           user.role = foundUser.role
+          socket.connect()
         } else {
           event.target[0].value = ""
           event.target[1].value = ""

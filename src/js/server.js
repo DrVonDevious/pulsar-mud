@@ -1,9 +1,11 @@
 const express = require("express")
+const app = express()
 const bodyParser = require("body-parser")
 const db = require("../js/db.js")
+const server = require("http").Server(app)
+const io = require("socket.io")(server, {})
 
-const app = express()
-const port = 3000
+const port = process.env.PORT || 3000
 
 app.use(bodyParser.json())
 
@@ -34,6 +36,17 @@ app.post("/locations", db.createLocation)
 app.put("/locations/:id", db.updateLocation)
 app.delete("/locations/:id", db.deleteLocation)
 
-app.listen(port, () => {
+io.on("connection", (socket) => {
+  console.log("User connected!")
+
+  socket.on("message", (data) => {
+    console.log(`${data.sender} sent a message`)
+    let sender = data.sender
+    let msg = data.msg
+    io.sockets.emit('message', { sender, msg })
+  })
+})
+
+server.listen(port, () => {
   console.log(`All systems nominal! Pulsar server running on port ${port}.`)
 })
