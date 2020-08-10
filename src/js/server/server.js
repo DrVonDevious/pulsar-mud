@@ -2,7 +2,7 @@ const express = require("express")
 const passport = require("passport")
 const app = express()
 const bodyParser = require("body-parser")
-const db = require("../js/db.js")
+const db = require("../server/db.js")
 const server = require("http").Server(app)
 const io = require("socket.io")(server, {})
 
@@ -17,7 +17,6 @@ app.use(
 )
 
 app.get('/', (request, response) => {
-  response.json({ info: 'Node.js, Express, and Postgres API' })
 })
 
 app.get("/users", db.getUsers)

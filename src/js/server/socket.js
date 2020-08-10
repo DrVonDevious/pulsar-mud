@@ -1,5 +1,5 @@
 const io = require("socket.io-client")
-const utils = require("../js/utils.js")
+const utils = require("../utils.js")
 
 const socket = {
 

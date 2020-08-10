@@ -1,7 +1,7 @@
 const commands = require("../js/commands.js")
 const utils = require("../js/utils.js")
 const player = require("../js/player.js")
-const socket = require("../js/socket.js")
+const socket = require("../js/server/socket.js")
 const user = require("../js/user.js")
 const request = require("superagent")
 const io = require("socket.io-client")
@@ -40,7 +40,6 @@ const mainMenu = () => {
 
   loginButton.addEventListener("click", () => {
     userLogin()
-    // gameScreen()
   })
 
   quitButton.addEventListener("click", () => {

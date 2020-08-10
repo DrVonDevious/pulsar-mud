@@ -1,11 +1,12 @@
+const options = require("./db-options.js")
 const Pool = require('pg').Pool
 
 const pool = new Pool({
-  user: 'william',
-  host: 'localhost',
-  database: 'pulsar',
-  password: 'test123',
-  port: 5432,
+  user: options.db.user,
+  host: options.db.host,
+  database: "pulsar", //options.db.database, BROKEN FOR SOME REASON
+  password: options.db.password,
+  port: options.db.port,
 })
 
 // USERS

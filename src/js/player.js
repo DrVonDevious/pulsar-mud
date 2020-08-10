@@ -1,7 +1,7 @@
 
 const utils = require("../js/utils.js")
 const user = require("../js/user.js")
-const socket = require("../js/socket.js")
+const socket = require("../js/server/socket.js")
 const io = require("socket.io-client")
 const request = require("superagent")
 
