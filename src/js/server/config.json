@@ -1,9 +1,0 @@
-{
-  "db": {
-    "user": "william",
-    "password": "!K+cTu2Fh%9#MpquUze9jsVw",
-    "host": "localhost",
-    "database": "pulsar",
-    "port": "5432"
-  }
-}

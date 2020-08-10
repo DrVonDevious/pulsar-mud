@@ -103,7 +103,7 @@ dist
 .dynamodb/
 
 # Database
-./src/js/server/config.json
+src/js/server/config.json
 
 # TernJS port file
 .tern-port
