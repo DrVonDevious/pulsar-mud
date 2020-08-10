@@ -16,9 +16,12 @@
   "author": "DrVonDevious",
   "license": "ISC",
   "dependencies": {
+    "bcrypt": "^5.0.0",
     "electron": "^9.1.1",
     "express": "^4.17.1",
     "http": "0.0.1-security",
+    "passport": "^0.4.1",
+    "passport-local": "^1.0.0",
     "pg": "^8.3.0",
     "socket.io": "^2.3.0",
     "superagent": "^5.3.1"
