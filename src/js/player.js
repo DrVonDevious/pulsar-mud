@@ -19,6 +19,28 @@ const player = {
     return currentLocation
   },
 
+  updatePlayer: () => {
+    request.put(`http://localhost:3000/characters/${user.currentCharacter.id}`)
+      .send({
+        name: user.currentCharacter.name,
+        race: user.currentCharacter.race,
+        xpos: user.currentCharacter.xpos,
+        ypos: user.currentCharacter.ypos,
+        zpos: user.currentCharacter.zpos,
+        user_id: user.currentCharacter.user_id,
+      })
+      .then(res => {
+        let playerObject = user.currentCharacter
+        socket.currentSocket.emit("player-update", { player:playerObject })
+        return res
+      })
+      .catch(err => {
+        console.log(err.message)
+        console.log(err.response)
+      })
+
+  },
+
   where: async () => {
     let location = await player.getCurrentLocation()
     utils.printMsg(location.id)
@@ -44,23 +66,9 @@ const player = {
     } else {
       console.log("Couldnt find exit!")
     }
-    request.put(`http://localhost:3000/characters/${user.currentCharacter.id}`)
-      .send({
-        name: user.currentCharacter.name,
-        race: user.currentCharacter.race,
-        xpos: user.currentCharacter.xpos,
-        ypos: user.currentCharacter.ypos,
-        zpos: user.currentCharacter.zpos,
-        user_id: user.currentCharacter.user_id,
-      })
-      .then(res => {
-        console.log(JSON.stringify(res.body))
-        player.where()
-      })
-      .catch(err => {
-        console.log(err.message)
-        console.log(err.response)
-      })
+
+    player.updatePlayer()
+    player.where()
   },
 
   // sends user message to the local chat for players in
@@ -68,7 +76,6 @@ const player = {
   say: (msgs) => {
     let msg = msgs.slice(1).join(" ")
     let username = user.currentCharacter.name
-    // utils.printMsg(`${user.currentCharacter.name}: ${msg}`, "#0FF")
     socket.currentSocket.emit("message", { sender:username, msg:msg })
   }
 

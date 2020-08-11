@@ -45,6 +45,11 @@ io.on("connection", (socket) => {
     let msg = data.msg
     io.sockets.emit('message', { sender, msg })
   })
+
+  socket.on("player-update", (data) => {
+    let player = data.player
+    socket.broadcast.emit("player-update", { player:player })
+  })
 })
 
 server.listen(port, () => {
