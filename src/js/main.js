@@ -4,6 +4,7 @@ const player = require("../js/player.js")
 const socket = require("../js/socket.js")
 const user = require("../js/user.js")
 const request = require("superagent")
+const bcrypt = require("bcrypt")
 const io = require("socket.io-client")
 
 const mainDiv = document.querySelector("#main-window")
@@ -53,7 +54,7 @@ const userRegister = () => {
 
   const registerForm = document.querySelector("#register-form")
   console.log(registerForm)
-  registerForm.addEventListener("submit", (event) => {
+  registerForm.addEventListener("submit", async (event) => {
     event.preventDefault()
     if (
       event.target[0].value.length >= 3
@@ -61,15 +62,23 @@ const userRegister = () => {
       && event.target[2].value === event.target[1].value
       && event.target[3].value.length >= 10
     ) {
+
+      let securePassword = await bcrypt.hash(event.target[1].value, 8)
+        .then(password => {
+          return password
+        })
+
       request.post("http://localhost:3000/users")
       .send({
         username: event.target[0].value,
-        password: event.target[1].value,
+        password_digest: securePassword,
         email: event.target[3].value,
         role: "basic"
       })
         .then(res => {
           console.log(JSON.stringify(res.body))
+          register.style.display = "none"
+          mainMenu()
         })
         .catch(err => {
           console.log(err.message)
@@ -86,27 +95,43 @@ const userLogin = () => {
   login.style.display = "block"
 
   const loginForm = document.querySelector("#login-form")
-  loginForm.addEventListener("submit", (event) => {
+  loginForm.addEventListener("submit", async (event) => {
     event.preventDefault()
     let username = event.target[0].value
     let password = event.target[1].value
     request.get("http://localhost:3000/users")
-      .then(res => {
+      .then(async res => {
         let users = res.body
         let foundUser = users.find(user => {
           return user.username === username
         })
-        if (foundUser && foundUser.password === password) {
-          login.style.display = "none"
-          mainDiv.style.display = "block"
-          user.id = foundUser.id
-          user.username = username
-          user.role = foundUser.role
-          socket.connect()
+
+        if (foundUser) {
+
+          console.log(foundUser.password_digest)
+          console.log("typed: " + password)
+
+          let passwordResult = await bcrypt.compare(password, foundUser.password_digest)
+            .then(result => { return result })
+
+          console.log(passwordResult)
+
+          if (passwordResult) {
+            login.style.display = "none"
+            mainDiv.style.display = "block"
+            user.id = foundUser.id
+            user.username = username
+            user.role = foundUser.role
+            socket.connect()
+          } else {
+            event.target[0].value = ""
+            event.target[1].value = ""
+            alert("Invalid Password!")
+          }
         } else {
           event.target[0].value = ""
           event.target[1].value = ""
-          alert("Invalid login!")
+          alert("Invalid Username!")
         }
       })
   })
