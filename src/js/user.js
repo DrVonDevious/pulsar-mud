@@ -1,8 +1,10 @@
 const request = require("superagent")
 const utils = require("../js/utils.js")
 
+const port = "https://pulsar-backend.herokuapp.com/"
+
 const getCharacters = async () => {
-  let characters = await request.get("http://localhost:3000/characters")
+  let characters = await request.get(port + "characters")
     .then(res => {
       let characters = res.body.filter(char => {
         return char.user_id === user.id
@@ -24,9 +26,9 @@ const user = {
     let name = await utils.query("What is your name?")
     let race = await utils.query("What is your race? (human)")
 
-    request.get(`http://localhost:3000/users/${user.id}`)
+    request.get(`${port}users/${user.id}`)
       .then(res => {
-        request.post("http://localhost:3000/characters")
+        request.post(port + "characters")
           .send({
             name: name,
             race: race,

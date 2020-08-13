@@ -7,7 +7,7 @@ const socket = {
 
   connect: async () => {
 
-    socket.currentSocket = await io.connect("http://localhost:3000")
+    socket.currentSocket = await io.connect("https://pulsar-backend.herokuapp.com/")
 
     socket.currentSocket.on("message", (data) => {
       utils.printMsg(`${data.sender}: ${data.msg}`, "#0AF")

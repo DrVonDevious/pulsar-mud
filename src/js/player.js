@@ -5,6 +5,8 @@ const socket = require("../js/socket.js")
 const io = require("socket.io-client")
 const request = require("superagent")
 
+const port = "https://pulsar-backend.herokuapp.com/"
+
 const player = {
 
   getCurrentLocation: async () => {
@@ -20,7 +22,7 @@ const player = {
   },
 
   updatePlayer: () => {
-    request.put(`http://localhost:3000/characters/${user.currentCharacter.id}`)
+    request.put(`${port}characters/${user.currentCharacter.id}`)
       .send({
         name: user.currentCharacter.name,
         race: user.currentCharacter.race,
@@ -58,7 +60,7 @@ const player = {
     let targetId = location.exits[direction]
     if (targetId) {
       let locations = await utils.getLocations()
-      let newLocation = await request.get(`http://localhost:3000/locations/${targetId}`)
+      let newLocation = await request.get(`${port}locations/${targetId}`)
         .then(res => { return res.body[0] })
       user.currentCharacter.xpos = newLocation.x
       user.currentCharacter.ypos = newLocation.y
