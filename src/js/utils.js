@@ -5,6 +5,8 @@ const request = require("superagent")
 
 const utils = {
 
+  port: "https://pulsar-backend.herokuapp.com/",
+
   waitFor: (condition) => {
     const poll = resolve => {
       if(condition()) resolve();
@@ -15,7 +17,7 @@ const utils = {
   },
 
   getLocations: async () => {
-    let locations = await request.get("http://localhost:3000/locations")
+    let locations = await request.get(utils.port + "locations")
       .then(res => {
         return res.body
       })

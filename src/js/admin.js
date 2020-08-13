@@ -3,10 +3,9 @@ const request = require("superagent")
 const user = require("../js/user.js")
 const player = require("../js/player.js")
 
-const port = "https://pulsar-backend.herokuapp.com/"
 
 const createLocation = (name, description, exits) => {
-  request.post(port + "locations")
+  request.post(utils.port + "locations")
     .send({
       name: name,
       description: description,
@@ -28,7 +27,7 @@ const createLocation = (name, description, exits) => {
 const removeLocation = async (id) => {
   let location = await player.getCurrentLocation()
 
-  request.delete(`${port}locations/${id}`)
+  request.delete(`${utils.port}locations/${id}`)
     .then(res => {
       console.log(JSON.stringify(res.body))
       utils.printMsg("Location deleted!")
@@ -42,7 +41,7 @@ const removeLocation = async (id) => {
 const updateLocation = async (name, description, exits) => {
   let location = await player.getCurrentLocation()
   console.log(location)
-  request.put(`${port}locations/${location.id}`)
+  request.put(`${utils.port}locations/${location.id}`)
     .send({
       name: name,
       description: description,

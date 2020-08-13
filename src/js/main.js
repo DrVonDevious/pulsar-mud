@@ -13,8 +13,6 @@ const inputBar = document.querySelector("#input-form")
 const register = document.querySelector("#register-window")
 const login = document.querySelector("#login-window")
 
-const port = "https://pulsar-backend.herokuapp.com/"
-
 // processes user input and clears the input bar
 inputBar.addEventListener("submit", (event) => {
   event.preventDefault()
@@ -70,7 +68,7 @@ const userRegister = () => {
           return password
         })
 
-      request.post(port + "users")
+      request.post(utils.port + "users")
       .send({
         username: event.target[0].value,
         password_digest: securePassword,
@@ -101,7 +99,7 @@ const userLogin = () => {
     event.preventDefault()
     let username = event.target[0].value
     let password = event.target[1].value
-    request.get(port + "users")
+    request.get(utils.port + "users")
       .then(async res => {
         let users = res.body
         let foundUser = users.find(user => {

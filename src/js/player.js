@@ -5,7 +5,6 @@ const socket = require("../js/socket.js")
 const io = require("socket.io-client")
 const request = require("superagent")
 
-const port = "https://pulsar-backend.herokuapp.com/"
 
 const player = {
 
@@ -22,7 +21,7 @@ const player = {
   },
 
   updatePlayer: () => {
-    request.put(`${port}characters/${user.currentCharacter.id}`)
+    request.put(`${utils.port}characters/${user.currentCharacter.id}`)
       .send({
         name: user.currentCharacter.name,
         race: user.currentCharacter.race,
@@ -60,7 +59,7 @@ const player = {
     let targetId = location.exits[direction]
     if (targetId) {
       let locations = await utils.getLocations()
-      let newLocation = await request.get(`${port}locations/${targetId}`)
+      let newLocation = await request.get(`${utils.port}locations/${targetId}`)
         .then(res => { return res.body[0] })
       user.currentCharacter.xpos = newLocation.x
       user.currentCharacter.ypos = newLocation.y
@@ -76,6 +75,7 @@ const player = {
   // sends user message to the local chat for players in
   // the current zone to see
   say: (msgs) => {
+    console.log(msgs)
     let msg = msgs.slice(1).join(" ")
     let username = user.currentCharacter.name
     socket.currentSocket.emit("message", { sender:username, msg:msg })
