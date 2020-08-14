@@ -55,6 +55,10 @@ body {
   background-color: #444;
 }
 
+.back-btn {
+
+}
+
 #register-window {
   display: none;
 }

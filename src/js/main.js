@@ -53,7 +53,13 @@ const userRegister = () => {
   register.style.display = "block"
 
   const registerForm = document.querySelector("#register-form")
-  console.log(registerForm)
+  const rBackBtn = document.querySelector("#r-back-btn")
+
+  rBackBtn.addEventListener("click", (event) => {
+    register.style.display = "none"
+    mainMenu()
+  })
+
   registerForm.addEventListener("submit", async (event) => {
     event.preventDefault()
     if (
@@ -76,7 +82,6 @@ const userRegister = () => {
         role: "basic"
       })
         .then(res => {
-          console.log(JSON.stringify(res.body))
           register.style.display = "none"
           mainMenu()
         })
@@ -95,6 +100,13 @@ const userLogin = () => {
   login.style.display = "block"
 
   const loginForm = document.querySelector("#login-form")
+  const lBackBtn = document.querySelector("#l-back-btn")
+
+  lBackBtn.addEventListener("click", (event) => {
+    login.style.display = "none"
+    mainMenu()
+  })
+
   loginForm.addEventListener("submit", async (event) => {
     event.preventDefault()
     let username = event.target[0].value
