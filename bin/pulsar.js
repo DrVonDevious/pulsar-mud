@@ -15,7 +15,7 @@ const createWindow = () => {
   // applies html file to current electron window
   frame.loadFile("src/html/index.html")
 
-  frame.webContents.openDevTools()
+  // frame.webContents.openDevTools()
 }
 
 electron.app.whenReady().then(createWindow)
