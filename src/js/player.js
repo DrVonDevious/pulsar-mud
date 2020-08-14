@@ -56,14 +56,20 @@ const player = {
   go: async (direction) => {
     let location = await player.getCurrentLocation()
     let targetId = location.exits[direction]
+
     if (targetId) {
       let locations = await utils.getLocations()
       let newLocation = await request.get(`${utils.port}locations/${targetId}`)
         .then(res => { return res.body[0] })
-      user.currentCharacter.xpos = newLocation.x
-      user.currentCharacter.ypos = newLocation.y
-      user.currentCharacter.zpos = newLocation.z
-      player.currentLocation = newLocation
+
+      if (newLocation) {
+        console.log(newLocation)
+        user.currentCharacter.xpos = newLocation.x
+        user.currentCharacter.ypos = newLocation.y
+        user.currentCharacter.zpos = newLocation.z
+        player.currentLocation = newLocation
+      } else { utils.printMsg("You can't go that way!", "#F00") }
+
     } else {
       console.log("Couldnt find exit!")
     }
