@@ -9,14 +9,13 @@ const request = require("superagent")
 const player = {
 
   getCurrentLocation: async () => {
-    let locations = await utils.getLocations()
-    let currentLocation = locations.find(loc => {
-      if (
-        loc.x == user.currentCharacter.xpos &&
-        loc.y == user.currentCharacter.ypos &&
-        loc.z == user.currentCharacter.zpos
-      ) { return loc }
-    })
+    let x = user.currentCharacter.xpos
+    let y = user.currentCharacter.ypos
+    let z = user.currentCharacter.zpos
+
+    let currentLocation = await utils.getLocationByCoords(x, y, z)
+
+    player.currentLocation = currentLocation
     return currentLocation
   },
 
@@ -64,6 +63,7 @@ const player = {
       user.currentCharacter.xpos = newLocation.x
       user.currentCharacter.ypos = newLocation.y
       user.currentCharacter.zpos = newLocation.z
+      player.currentLocation = newLocation
     } else {
       console.log("Couldnt find exit!")
     }

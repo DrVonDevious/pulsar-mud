@@ -16,6 +16,16 @@ const utils = {
     return new Promise(poll);
   },
 
+  getLocationByCoords: async (x, y, z) => {
+    let locations = await utils.getLocations()
+    let currentLocation = locations.find(loc => {
+      if (
+        loc.x == x && loc.y == y && loc.z == z
+      ) { return loc }
+    })
+    return currentLocation
+  },
+
   getLocations: async () => {
     let locations = await request.get(utils.port + "locations")
       .then(res => {
@@ -23,6 +33,7 @@ const utils = {
       })
     return locations
   },
+
 
   printMsg: (msg, color="#FFF", background="rgba(0,0,0,0)", style="normal") => {
     let message_element = document.createElement("pre")

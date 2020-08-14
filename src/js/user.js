@@ -19,6 +19,7 @@ const user = {
   username: "none",
   role: "none",
   currentCharacter: null,
+  characterLocation: null,
 
   newCharacter: async () => {
 
@@ -61,6 +62,11 @@ const user = {
     })
     if (foundCharacter) {
       user.currentCharacter = foundCharacter
+      user.characterLocation = await utils.getLocationByCoords(
+        foundCharacter.xpos,
+        foundCharacter.ypos,
+        foundCharacter.zpos
+      )
       utils.printMsg("Now playing as " + foundCharacter.name, "#AF0")
     } else {
       utils.printMsg("Character not found!", "#F00")
