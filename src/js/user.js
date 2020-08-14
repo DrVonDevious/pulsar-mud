@@ -28,7 +28,7 @@ const user = {
 
     request.get(`${utils.port}users/${user.id}`)
       .then(res => {
-        request.post(port + "characters")
+        request.post(utils.port + "characters")
           .send({
             name: name,
             race: race,
