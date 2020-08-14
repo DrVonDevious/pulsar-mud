@@ -22,31 +22,42 @@ const commands = {
     } else {
 
       let playerFilter = !!user.currentCharacter
-      let adminFilter = user.currentCharacter && user.role == "admin"
+      let adminFilter = playerFilter && user.role == "admin"
 
       // checks if the first word of a command matches a known command
       // User Commands
-      if (cmds[0] == "clear") utils.clearScreen()
-      else if (cmds[0] == "help") help(cmds)
-      else if (cmds[0] == "quit") quitGame()
-      else if (cmds[0] == "new") user.newCharacter()
-      else if (cmds[0] == "user") userInfo()
-      else if (cmds[0] == "play") user.playCharacter(cmds[1])
-      else if (cmds[0] == "characters") user.characters()
+      if (cmds[0] == "clear" && cmds.length === 1) utils.clearScreen()
+      else if (cmds[0] == "help" && cmds.length <= 2) help(cmds)
+      else if (cmds[0] == "quit" && cmds.length === 1) quitGame()
+      else if (cmds[0] == "logout" && cmds.length === 1) { console.log("NOT IMPLEMENTED YET") }
+      else if (cmds[0] == "new" && cmds.length === 1 && !playerFilter) user.newCharacter()
+      else if (cmds[0] == "retire" && cmds.length === 2 && !playerFilter) { console.log("NOT IMPLEMENTED YET") }
+      else if (cmds[0] == "user" && cmds.length === 1) userInfo()
+      else if (cmds[0] == "play" && cmds.length === 2) user.playCharacter(cmds[1])
+      else if (cmds[0] == "characters" && cmds.length === 1) user.characters()
 
       // Player Commands
-      else if (cmds[0] == "say" && playerFilter) player.say(cmds)
-      else if (cmds[0] == "go" && playerFilter) player.go(cmds[1])
-      else if (cmds[0] == "where" && playerFilter) player.where()
+      else if (cmds[0] == "say" && cmds.length >= 2 && playerFilter) player.say(cmds)
+      else if (cmds[0] == "whisper" && playerFilter) { console.log("NOT IMPLEMENTED YET") }
+
+      else if (cmds[0] == "go" && cmds.length === 2 && playerFilter) player.go(cmds[1])
+      else if (cmds[0] == "board" && playerFilter) { console.log("NOT IMPLEMENTED YET") }
+
+      else if (cmds[0] == "where" && cmds.length === 1 && playerFilter) player.where()
+      else if (cmds[0] == "look" && playerFilter) { console.log("NOT IMPLEMENTED YET") }
+      else if (cmds[0] == "inv" && cmds.length === 1 && playerFilter) { console.log("NOT IMPLEMENTED YET") }
+      else if (cmds[0] == "me" && cmds.length === 1 && playerFilter) { console.log("NOT IMPLEMENTED YET") }
+
+      else if (cmds[0] == "grab" && playerFilter) { console.log("NOT IMPLEMENTED YET") }
 
       // Admin Commands
-      else if (cmds[0] == "tele" && adminFilter) {
+      else if (cmds[0] == "tele" && cmds.length === 4 && adminFilter) {
         admin.teleport(cmds[1], cmds[2], cmds[3])
       }
 
-      else if (cmds[0] == "createLocation" && adminFilter) admin.newLocation()
-      else if (cmds[0] == "editLocation" && adminFilter) admin.editLocation()
-      else if (cmds[0] == "deleteLocation" && adminFilter) admin.deleteLocation()
+      else if (cmds[0] == "createLocation" && cmds.length === 1 && adminFilter) admin.newLocation()
+      else if (cmds[0] == "editLocation" && cmds.length === 1 && adminFilter) admin.editLocation()
+      else if (cmds[0] == "deleteLocation" && cmds.length === 1 && adminFilter) admin.deleteLocation()
 
       else unknownCmd()
     }

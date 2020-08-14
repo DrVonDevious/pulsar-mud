@@ -45,6 +45,8 @@ const utils = {
     terminal.appendChild(message_element)
   },
 
+  printImg: () => {},
+
   clearScreen: () => {
     terminal.innerHTML = ""
   },

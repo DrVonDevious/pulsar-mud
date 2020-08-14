@@ -48,6 +48,14 @@ const user = {
       })
   },
 
+  retireCharacter: async () => {
+    //TODO: deletes character
+  },
+
+  logout: () => {
+    //TODO
+  },
+
   characters: async () => {
     let characters = await getCharacters()
     characters.forEach(char => {
