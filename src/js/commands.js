@@ -35,6 +35,7 @@ const commands = {
       else if (cmds[0] == "user" && cmds.length === 1) userInfo()
       else if (cmds[0] == "play" && cmds.length === 2) user.playCharacter(cmds[1])
       else if (cmds[0] == "characters" && cmds.length === 1) user.characters()
+      else if (cmds[0] == "sb" && cmds.length === 1) utils.toggleSidebar()
 
       // Player Commands
       else if (cmds[0] == "say" && cmds.length >= 2 && playerFilter) player.say(cmds)

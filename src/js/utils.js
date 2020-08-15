@@ -7,6 +7,27 @@ const utils = {
 
   port: "https://pulsar-backend.herokuapp.com/",
 
+  updateSidebar: async (character) => {
+    const nameLabel = document.querySelector("#sidebar-name")
+    const locationNameLabel = document.querySelector("#sidebar-location-name")
+    const locationCoordsLabel = document.querySelector("#sidebar-location-coords")
+
+    nameLabel.innerText = character.name
+    const location = await utils.getLocationByCoords(character.xpos, character.ypos, character.zpos)
+    locationNameLabel.innerText = location.name
+    locationCoordsLabel.innerText = `X: ${character.xpos}, Y: ${character.ypos}, Z: ${character.zpos}`
+  },
+
+  toggleSidebar: () => {
+    const sidebar = document.querySelector("#sidebar")
+
+    if (sidebar.style.display == "block") {
+      sidebar.style.display = "none"
+    } else {
+      sidebar.style.display = "block"
+    }
+  },
+
   waitFor: (condition) => {
     const poll = resolve => {
       if(condition()) resolve();

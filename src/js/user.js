@@ -76,6 +76,7 @@ const user = {
         foundCharacter.zpos
       )
       utils.printMsg("Now playing as " + foundCharacter.name, "#AF0")
+      utils.updateSidebar(foundCharacter)
     } else {
       utils.printMsg("Character not found!", "#F00")
     }

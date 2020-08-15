@@ -27,6 +27,7 @@ body {
 
 #main-window {
   display: none;
+  overflow: hidden;
   position: absolute;
   width: 100%;
   height: 100%;
@@ -86,7 +87,8 @@ body {
   height: 60%;
   min-height: 400px;
 
-  left: 50%; top: 50%;
+  left: 50%;
+  top: 50%;
   transform: translate(-50%, -50%);
 }
 
@@ -135,8 +137,8 @@ body {
 
 #terminal-output {
   position: absolute;
-  width: 74.8%;
-  height: 98%;
+  width: 79.8%;
+  height: 96%;
   margin-left: 4px;
   margin-top: 4px;
   background-color: #000;
@@ -145,9 +147,9 @@ body {
 
 #terminal-input {
   background-color: #111;
-  position: absolute;
-  bottom: 0;
-  width: 76%;
+  position: relative;
+  top: 98%;
+  width: 100%;
   height: 20px;
 }
 
@@ -163,12 +165,12 @@ body {
 }
 
 #sidebar {
+  display: block;
   background-color: #000;
   border-left: 1px solid #fff;
   position: relative;
-  float: right;
-  width: 24%;
-  height: calc(100vh);
+  width: 400px;
+  height: calc(101vh);
 }
 
 #title-text {

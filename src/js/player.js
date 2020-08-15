@@ -68,6 +68,7 @@ const player = {
         user.currentCharacter.ypos = newLocation.y
         user.currentCharacter.zpos = newLocation.z
         player.currentLocation = newLocation
+        utils.updateSidebar(user.currentCharacter)
       } else { utils.printMsg("You can't go that way!", "#F00") }
 
     } else {

@@ -12,6 +12,7 @@ const menu = document.querySelector("#main-menu")
 const inputBar = document.querySelector("#input-form")
 const register = document.querySelector("#register-window")
 const login = document.querySelector("#login-window")
+const sidebar = document.querySelector("#sidebar")
 
 // processes user input and clears the input bar
 inputBar.addEventListener("submit", (event) => {
@@ -130,7 +131,8 @@ const userLogin = () => {
 
           if (passwordResult) {
             login.style.display = "none"
-            mainDiv.style.display = "block"
+            sidebar.style.display = "block"
+            mainDiv.style.display = "flex"
             user.id = foundUser.id
             user.username = username
             user.role = foundUser.role
@@ -151,7 +153,7 @@ const userLogin = () => {
 
 const gameScreen = () => {
   menu.style.display = "none"
-  mainDiv.style.display = "block"
+  mainDiv.style.display = "flex"
 }
 
 const run = async () => {
