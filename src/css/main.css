@@ -55,12 +55,43 @@ body {
   background-color: #444;
 }
 
-.back-btn {
+#r-back-btn {
+  position: absolute;
+  top: 2%;
+  left: 2%;
+}
 
+#input-block {
+  display: inline-grid;
+  margin: 18px 0 18px 0;
 }
 
 #register-window {
+  text-align: -webkit-center;
+  border: 1px solid #FFF;
+  border-radius: 16px;
+
   display: none;
+  position: absolute;
+
+  width: 50%;
+  min-width: 300px;
+
+  height: 60%;
+  min-height: 400px;
+
+  left: 50%; top: 50%;
+  transform: translate(-50%, -50%);
+}
+
+#register-submit {
+  margin: 18px 0 18px 0;
+}
+
+#register-form {
+  display: inline-grid;
+  position: relative;
+  top: 8%;
 }
 
 #login-window {
