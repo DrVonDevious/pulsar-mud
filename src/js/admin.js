@@ -12,7 +12,8 @@ const createLocation = (name, description, exits) => {
       x: user.currentCharacter.xpos,
       y: user.currentCharacter.ypos,
       z: user.currentCharacter.zpos,
-      exits: exits
+      exits: exits,
+      items: {},
     })
     .then(res => {
       utils.printMsg("Location created!")
@@ -48,7 +49,8 @@ const updateLocation = async (name, description, exits) => {
       x: location.x,
       y: location.y,
       z: location.z,
-      exits: exits
+      exits: exits,
+      items: {},
     })
     .then(res => {
       console.log(JSON.stringify(res.body))
