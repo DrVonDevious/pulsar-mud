@@ -3,6 +3,7 @@ const utils = require("../js/utils.js")
 const admin = require("../js/admin.js")
 const user = require("../js/user.js")
 const player = require("../js/player.js")
+const items = require("../../lib/items/items.js")
 
 const output = document.querySelector("#terminal-output")
 
@@ -36,6 +37,7 @@ const commands = {
       else if (cmds[0] == "play" && cmds.length === 2) user.playCharacter(cmds[1])
       else if (cmds[0] == "characters" && cmds.length === 1) user.characters()
       else if (cmds[0] == "sb" && cmds.length === 1) utils.toggleSidebar()
+      else if (cmds[0] == "test") { console.log(items.getItemById(1)) }
 
       // Player Commands
       else if (cmds[0] == "say" && cmds.length >= 2 && playerFilter) player.say(cmds)
@@ -46,10 +48,10 @@ const commands = {
 
       else if (cmds[0] == "where" && cmds.length === 1 && playerFilter) player.where()
       else if (cmds[0] == "look" && playerFilter) { console.log("NOT IMPLEMENTED YET") }
-      else if (cmds[0] == "inv" && cmds.length === 1 && playerFilter) { console.log("NOT IMPLEMENTED YET") }
+      else if (cmds[0] == "inv" && cmds.length === 1 && playerFilter) player.showInventory()
       else if (cmds[0] == "me" && cmds.length === 1 && playerFilter) { console.log("NOT IMPLEMENTED YET") }
 
-      else if (cmds[0] == "grab" && playerFilter) { console.log("NOT IMPLEMENTED YET") }
+      else if (cmds[0] == "grab" && playerFilter) player.grab({ id:1, qty:1 })
 
       // Admin Commands
       else if (cmds[0] == "tele" && cmds.length === 4 && adminFilter) {

@@ -1,6 +1,7 @@
 
 const utils = require("../js/utils.js")
 const user = require("../js/user.js")
+const items = require("../../lib/items/items.js")
 const socket = require("../js/socket.js")
 const io = require("socket.io-client")
 const request = require("superagent")
@@ -27,6 +28,7 @@ const player = {
         xpos: user.currentCharacter.xpos,
         ypos: user.currentCharacter.ypos,
         zpos: user.currentCharacter.zpos,
+        inventory: user.currentCharacter.inventory,
         user_id: user.currentCharacter.user_id,
       })
       .then(res => {
@@ -86,7 +88,26 @@ const player = {
     let msg = msgs.slice(1).join(" ")
     let username = user.currentCharacter.name
     socket.currentSocket.emit("message", { sender:username, msg:msg })
-  }
+  },
+
+  showInventory: () => {
+    if (user.currentCharacter.inventory) {
+      user.currentCharacter.inventory.map(item => {
+        const foundItem = items.getItemById(item.id)
+        utils.printMsg(foundItem.name, "#FA0")
+      })
+    } else {
+      utils.printMsg("Your inventory is empty")
+    }
+  },
+
+  grab: (target) => {
+    if (!user.currentCharacter.inventory) {
+      user.currentCharacter.inventory = []
+    }
+
+    user.currentCharacter.inventory.push(target)
+  },
 
 }
 
