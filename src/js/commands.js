@@ -51,7 +51,11 @@ const commands = {
       else if (cmds[0] == "inv" && cmds.length === 1 && playerFilter) player.showInventory()
       else if (cmds[0] == "me" && cmds.length === 1 && playerFilter) { console.log("NOT IMPLEMENTED YET") }
 
-      else if (cmds[0] == "grab" && playerFilter) player.grab({ id:1, qty:1 })
+      else if (cmds[0] == "grab" && playerFilter) {
+        cmds.shift()
+        let target = cmds.join(" ")
+        player.grab(target)
+      }
 
       // Admin Commands
       else if (cmds[0] == "tele" && cmds.length === 4 && adminFilter) {

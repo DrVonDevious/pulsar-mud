@@ -106,7 +106,30 @@ const player = {
       user.currentCharacter.inventory = []
     }
 
-    user.currentCharacter.inventory.push(target)
+    if (target) {
+      let foundItem = items.getItemByName(target)
+      console.log(target)
+      if (foundItem) {
+        user.currentCharacter.inventory.push({ id:foundItem.id, qty:1 })
+        Object.keys(foundItem).map((k, i) => {
+          console.log(k)
+        })
+      } else {
+        utils.printMsg("You do not see that item here.")
+      }
+    } else {
+      if (user.characterLocation.items) {
+        let item = user.characterLocation.items[0]
+        if (item) {
+          console.log(item)
+          user.currentCharacter.inventory.push(item)
+        } else {
+          utils.printMsg("You see no items here to pick up.")
+        }
+      } else {
+        utils.printMsg("You see no items here to pick up.")
+      }
+    }
   },
 
 }
