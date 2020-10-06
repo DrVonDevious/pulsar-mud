@@ -18,7 +18,7 @@
   "license": "ISC",
   "dependencies": {
     "bcrypt": "^5.0.0",
-    "electron": "^9.1.1",
+    "electron": "^9.3.1",
     "express": "^4.17.1",
     "http": "0.0.1-security",
     "jwt-simple": "^0.5.6",
